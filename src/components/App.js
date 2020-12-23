@@ -1,6 +1,7 @@
 import React from 'react';
 import Movie from './Movie.jsx';
 import Search from './Search.jsx';
+import AddMovie from './AddMovie.jsx';
 
 
 class App extends React.Component {
@@ -35,12 +36,23 @@ class App extends React.Component {
     });
   }
 
+  handleAdd(movie) {
+    document.getElementById('add-Bar').value = '';
+    this.setState({
+      movieList: [...this.state.movieList, movie],
+      moviesShown: [...this.state.movieList, movie]
+    });
+  }
+
   render(){
     const movies = this.state.moviesShown;
     return (
       <div>
         <div id='search-bar'>
           <Search searchMovie={this.handleSearch.bind(this)} clearSearch={this.handleClear.bind(this)}/>
+        </div>
+        <div id='add-movie'>
+          <AddMovie handleAdd={this.handleAdd.bind(this)} />
         </div>
         <div>
           {movies.map(movie => {

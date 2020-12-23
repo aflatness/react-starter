@@ -4,19 +4,13 @@
   padding: 5px 0 5px 10px;
 }
 
-.movie-title {
-  font-size: 20px;
-  margin-left: 1.8em;
-  border: 2px grey solid;
-  padding: 5px 0 5px 15px;
-}
-
 #search-bar {
   margin-left: 2.2em;
   margin-bottom: 1.5em;
+  display: inline-block;
 }
 
-#searchBtn {
+#searchBtn, #addBtn {
   background-color: white;
   border: 1px grey solid;
   border-radius: 1px;
@@ -26,3 +20,18 @@
 #clearSearch {
   margin-top: 3px;
 }
+
+#add-movie {
+  float: right;
+  margin-right: 100px;
+  margin-top: .8em;
+  margin-left: 2.2em;
+}
+
+.movie-title {
+  font-size: 20px;
+  margin-left: 1.8em;
+  border: 2px grey solid;
+  padding: 5px 0 5px 15px;
+}
+
