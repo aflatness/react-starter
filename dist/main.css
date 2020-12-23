@@ -1,0 +1,28 @@
+#header {
+  background-color: rgb(168, 166, 166);
+  border: 2px black solid;
+  padding: 5px 0 5px 10px;
+}
+
+.movie-title {
+  font-size: 20px;
+  margin-left: 1.8em;
+  border: 2px grey solid;
+  padding: 5px 0 5px 15px;
+}
+
+#search-bar {
+  margin-left: 2.2em;
+  margin-bottom: 1.5em;
+}
+
+#searchBtn {
+  background-color: white;
+  border: 1px grey solid;
+  border-radius: 1px;
+  font-size: 15px;
+}
+
+#clearSearch {
+  margin-top: 3px;
+}
