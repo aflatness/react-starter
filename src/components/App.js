@@ -16,9 +16,16 @@ class App extends React.Component {
   handleSearch(text) {
     text = text.toLowerCase();
     const movieFocus = this.state.movieList.filter(({title}) => title.toLowerCase().includes(text));
-    this.setState({
-      moviesShown: movieFocus
-    });
+
+    if (movieFocus.length) {
+      this.setState({
+        moviesShown: movieFocus
+      });
+    } else {
+      this.setState({
+        moviesShown: [{title: `No movies found with ${text}`}]
+      });
+    }
   }
 
   handleClear(e) {
