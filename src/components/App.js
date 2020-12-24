@@ -1,6 +1,7 @@
 import React from 'react';
-import Movie from './Movie.jsx';
 import Search from './Search.jsx';
+import ToWatch from './ToWatch.jsx';
+import Watched from './Watched.jsx';
 import AddMovie from './AddMovie.jsx';
 
 
@@ -10,7 +11,11 @@ class App extends React.Component {
 
     this.state = {
       movieList: this.props.movies,
-      moviesShown: this.props.movies
+      watched: [],
+      toWatch: [],
+      focus: 'toWatch',
+      searched: [],
+      focusedComp: ['focusedBtn', 'unFocusedBtn']
     }
   }
 
@@ -20,11 +25,13 @@ class App extends React.Component {
 
     if (movieFocus.length) {
       this.setState({
-        moviesShown: movieFocus
+        searched: movieFocus,
+        focus: 'searched'
       });
     } else {
       this.setState({
-        moviesShown: [{title: `No movies found with ${text}`}]
+        searched: [{title: `No movies found with ${text}`}],
+        focus: 'searched'
       });
     }
   }
@@ -32,7 +39,7 @@ class App extends React.Component {
   handleClear(e) {
     document.getElementById('search-box').value = '';
     this.setState({
-      moviesShown: this.props.movies
+      focus: 'toWatch'
     });
   }
 
@@ -40,12 +47,71 @@ class App extends React.Component {
     document.getElementById('add-Bar').value = '';
     this.setState({
       movieList: [...this.state.movieList, movie],
-      moviesShown: [...this.state.movieList, movie]
+      toWatch: [...this.state.toWatch, movie],
+      focus: 'toWatch'
     });
   }
 
+  handleWatched(focusMovie) {
+    focusMovie.status = !focusMovie.status
+    const {movieList, watched, toWatch} = this.state;
+    if (focusMovie.status) {
+
+      this.setState({
+        movieList: movieList.map(movie => movie.title === focusMovie.title ? focusMovie : movie),
+        toWatch: toWatch.filter(({title}) => title !== focusMovie.title),
+        watched: [...watched, focusMovie]
+      });
+    } else {
+        this.setState({
+        movieList: movieList.map(movie => movie.title === focusMovie.title ? focusMovie : movie),
+        toWatch: [...toWatch, focusMovie],
+        watched: watched.filter(({title}) => title !== focusMovie.title)
+      })
+    }
+  }
+
+  handleListChange(e) {
+    const focus = e.target.value;
+    const focusedComp = this.state.focusedComp.reverse();
+    this.setState({focus, });
+  }
+
   render(){
-    const movies = this.state.moviesShown;
+    const {watched, toWatch, focus, searched} = this.state;
+    let moviesShown;
+
+    if (focus === 'toWatch') {
+      moviesShown =
+        <div>
+          {toWatch.map(movie => {
+            return <ToWatch movie={movie} handleWatched={this.handleWatched.bind(this)} watched={movie.status}/>
+          })}
+        </div>
+    } else if (focus ==='searched') {
+      moviesShown =
+        <div className='searched'>
+          {searched.map(movie => {
+            const watched = movie.status ? 'To watch' : 'Watched';
+            return (
+              <div>
+                <div className='movie-title'>
+                  {movie.title}
+                <button className='status' classNameonClick={() => this.handleWatched(movie)}>{watched}</button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+    } else {
+      moviesShown =
+        <div>
+            {watched.map(movie => {
+              return <Watched movie={movie} handleWatched={this.handleWatched.bind(this)} watched={movie.status} />
+            })}
+        </div>
+    }
+
     return (
       <div>
         <div id='search-bar'>
@@ -54,11 +120,10 @@ class App extends React.Component {
         <div id='add-movie'>
           <AddMovie handleAdd={this.handleAdd.bind(this)} />
         </div>
-        <div>
-          {movies.map(movie => {
-            return <Movie title={movie.title} />
-          })}
-        </div>
+        <br />
+        <button className={this.state.focusedComp[0]} onClick={this.handleListChange.bind(this)} value='toWatch'>To Watch</button>
+        <button className={`${this.state.focusedComp[1]} watchedComp`} onClick={this.handleListChange.bind(this)} value='Watched'>Watched</button>
+        {moviesShown}
       </div>
   )}
 }

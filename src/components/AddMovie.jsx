@@ -5,7 +5,8 @@ class AddMovie extends React.Component {
     super(props)
 
     this.state = {
-      title: ''
+      title: '',
+      watched: false,
     }
   }
 

@@ -4,6 +4,10 @@
   padding: 5px 0 5px 10px;
 }
 
+button {
+  cursor: pointer;
+}
+
 #search-bar {
   margin-left: 2.2em;
   margin-bottom: 1.5em;
@@ -28,10 +32,41 @@
   margin-left: 2.2em;
 }
 
+.focusedBtn, .unFocusedBtn {
+  margin-left: 37px;
+  padding: 15px 10px;
+  margin-bottom: 0.1px;
+  font-weight: bold;
+}
+
 .movie-title {
   font-size: 20px;
   margin-left: 1.8em;
   border: 2px grey solid;
   padding: 5px 0 5px 15px;
+}
+
+.status {
+  float: right;
+  margin-right: 20px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.watchedComp {
+  margin-left: 0px;
+}
+
+.unFocusedBtn {
+  background-color: white;
+  border: 1px solid;
+  border-radius: 3px;
+}
+
+.status, .focusedBtn {
+  background-color: rgb(4, 165, 4);
+  border: 1px solid;
+  border-radius: 3px;
 }
 
